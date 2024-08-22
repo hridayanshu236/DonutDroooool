@@ -18,7 +18,7 @@ public class DonutMovement : MonoBehaviour
         // Adjust Rigidbody settings for realistic physics
         rb.mass = 2f;  // Keep mass moderate
         rb.drag = 1f;  // Low drag for rolling
-        rb.angularDrag = 1f;  // Low angular drag for smooth rotation
+        rb.angularDrag = 1.2f;  // Low angular drag for smooth rotation
     }
 
     void FixedUpdate()
