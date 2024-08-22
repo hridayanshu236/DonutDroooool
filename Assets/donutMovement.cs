@@ -1,42 +1,49 @@
 using UnityEngine;
 
-public class donutMovement : MonoBehaviour
+public class DonutMovement : MonoBehaviour
 {
     public Rigidbody rb;
-    public float forwardForce = -2000f;
-    public float sidewaysForce = 500f;
-    public float torqueForce = 1000f; // New variable for torque
+    public float initialForce = 100f;
+    public float movementForce = 500f;  // Moderate force for smoother rolling
+    public float torqueForce = 200f;     // Adjusted torque for better control
 
     void Start()
     {
         // Automatically assign the Rigidbody component at the start
         rb = GetComponent<Rigidbody>();
+
+        // Ensure the Rigidbody can rotate on all axes
+        rb.constraints = RigidbodyConstraints.None;
+
+        // Adjust Rigidbody settings for realistic physics
+        rb.mass = 2f;  // Keep mass moderate
+        rb.drag = 1f;  // Low drag for rolling
+        rb.angularDrag = 1f;  // Low angular drag for smooth rotation
     }
 
-    void FixedUpdate() // Because we are using it to mess with physics
+    void FixedUpdate()
     {
-        // Adds forward force
-        rb.AddForce(0, 0, forwardForce * Time.deltaTime);
+        // Continuous forward force to maintain rolling along the global Z-axis
+        rb.AddForce(Vector3.back * initialForce * Time.deltaTime);
 
-        // Apply force to move the donut forward/backward
-        if (Input.GetKey("w"))
+        // Apply additional force to move forward/backward based on input along the global Z-axis
+        if (Input.GetKey(KeyCode.W))
         {
-            rb.AddForce(0, 0, -sidewaysForce * Time.deltaTime); // Move forward
+            rb.AddForce(Vector3.back * movementForce * Time.deltaTime); // Move forward
         }
-        if (Input.GetKey("s"))
+        if (Input.GetKey(KeyCode.S))
         {
-            rb.AddForce(0, 0, sidewaysForce * Time.deltaTime); // Move backward
+            rb.AddForce(Vector3.forward * movementForce * Time.deltaTime); // Move backward
         }
 
-        // Apply torque to rotate the donut left/right
-        if (Input.GetKey("a"))
+        // Apply torque to rotate the donut left/right around the global Y-axis
+        if (Input.GetKey(KeyCode.A))
         {
-            rb.AddTorque(Vector3.up * torqueForce * Time.deltaTime); // Rotate left
+            rb.AddTorque(Vector3.up * -torqueForce * Time.deltaTime); // Rotate left
         }
-        if (Input.GetKey("d"))
+        if (Input.GetKey(KeyCode.D))
         {
-            rb.AddTorque(-Vector3.up * torqueForce * Time.deltaTime); // Rotate right
+            rb.AddTorque(Vector3.up * torqueForce * Time.deltaTime); // Rotate right
         }
     }
 }
-
