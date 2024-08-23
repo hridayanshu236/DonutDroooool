@@ -8,6 +8,7 @@ public class DonutCollision : MonoBehaviour
         if(collisionInfo.collider.tag == "Obstacle")
         {
             movement.enabled = false;
+            FindObjectOfType<GameManager>().EndGame();
         }
         
     }

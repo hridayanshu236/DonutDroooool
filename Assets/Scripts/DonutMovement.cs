@@ -45,5 +45,9 @@ public class DonutMovement : MonoBehaviour
         {
             rb.AddTorque(Vector3.up * torqueForce * Time.deltaTime); // Rotate right
         }
+        if (rb.position.y < 1.6357f)
+        {
+            FindObjectOfType<GameManager>().EndGame();
+        }
     }
 }
