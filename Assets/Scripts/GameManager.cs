@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     public float restartDelay = 2f;
 
     public GameObject completeLevelUI;
+    public GameObject gameOverUI;
 
     public void CompleteLevel()
     {
@@ -18,14 +19,13 @@ public class GameManager : MonoBehaviour
         {
             gameHasEnded = true;
             Debug.Log("GAME OVER");
-            Invoke("Restart", restartDelay);
+            Restart();
         }
       
     }
     
     void Restart()
     {
-        //Resets the scene when game over
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        gameOverUI.SetActive(true);
     }
 }
